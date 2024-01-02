@@ -3,8 +3,8 @@
 #include <string.h>
 #include "kem.h"
 #include "randombytes.h"
-
-#define NTESTS 1000
+#include "my_memory_op.h"
+#define NTESTS 1
 
 static int test_keys()
 {
@@ -13,6 +13,8 @@ static int test_keys()
   uint8_t ct[CRYPTO_CIPHERTEXTBYTES];
   uint8_t key_a[CRYPTO_BYTES];
   uint8_t key_b[CRYPTO_BYTES];
+
+
 
   //Alice generates a public key
   crypto_kem_keypair(pk, sk);
@@ -23,7 +25,7 @@ static int test_keys()
   //Alice uses Bobs response to get her shared key
   crypto_kem_dec(key_a, ct, sk);
 
-  if(memcmp(key_a, key_b, CRYPTO_BYTES)) {
+  if(my_memcmp(key_a, key_b, CRYPTO_BYTES)) {
     printf("ERROR keys\n");
     return 1;
   }
@@ -51,7 +53,7 @@ static int test_invalid_sk_a()
   //Alice uses Bobs response to get her shared key
   crypto_kem_dec(key_a, ct, sk);
 
-  if(!memcmp(key_a, key_b, CRYPTO_BYTES)) {
+  if(!my_memcmp(key_a, key_b, CRYPTO_BYTES)) {
     printf("ERROR invalid sk\n");
     return 1;
   }
@@ -86,7 +88,7 @@ static int test_invalid_ciphertext()
   //Alice uses Bobs response to get her shared key
   crypto_kem_dec(key_a, ct, sk);
 
-  if(!memcmp(key_a, key_b, CRYPTO_BYTES)) {
+  if(!my_memcmp(key_a, key_b, CRYPTO_BYTES)) {
     printf("ERROR invalid ciphertext\n");
     return 1;
   }

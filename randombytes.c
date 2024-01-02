@@ -78,12 +78,14 @@
 //  }
 //}
 //#endif
-
+int indexer = 0;
 void randombytes(uint8_t *out, size_t outlen) {
-    int i = 0;
-
+    char randomTable[20] = {'a','b','c','d','e','f','g','h','i','j','k','l','m',
+                            'n','o','p','q','r','s','t'};
+    size_t i = 0;
     for(i=0; i<outlen;i++){
-        out[i] = 'a';
+        out[i] = randomTable[indexer+i];
+        indexer++;
     }
 }
 

@@ -4,6 +4,7 @@
 #include "params.h"
 #include "symmetric.h"
 #include "fips202.h"
+#include "my_memory_op.h"
 
 /*************************************************
 * Name:        kyber_shake128_absorb
@@ -22,7 +23,7 @@ void kyber_shake128_absorb(keccak_state *state,
 {
   uint8_t extseed[KYBER_SYMBYTES+2];
 
-  memcpy(extseed, seed, KYBER_SYMBYTES);
+  my_memcpy(extseed, seed, KYBER_SYMBYTES);
   extseed[KYBER_SYMBYTES+0] = x;
   extseed[KYBER_SYMBYTES+1] = y;
 
@@ -44,7 +45,7 @@ void kyber_shake256_prf(uint8_t *out, size_t outlen, const uint8_t key[KYBER_SYM
 {
   uint8_t extkey[KYBER_SYMBYTES+1];
 
-  memcpy(extkey, key, KYBER_SYMBYTES);
+  my_memcpy(extkey, key, KYBER_SYMBYTES);
   extkey[KYBER_SYMBYTES] = nonce;
 
   shake256(out, outlen, extkey, sizeof(extkey));
