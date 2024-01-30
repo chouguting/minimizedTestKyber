@@ -1,6 +1,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "randombytes.h"
 
 //#ifdef _WIN32
@@ -82,9 +83,10 @@ int indexer = 0;
 void randombytes(uint8_t *out, size_t outlen) {
     char randomTable[20] = {'a','b','c','d','e','f','g','h','i','j','k','l','m',
                             'n','o','p','q','r','s','t'};
+//    printf("outlen: %d\n",outlen);
     size_t i = 0;
     for(i=0; i<outlen;i++){
-        out[i] = randomTable[indexer+i];
+        out[i] = randomTable[(indexer+i)%20];
         indexer++;
     }
 }
